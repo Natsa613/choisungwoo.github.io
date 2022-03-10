@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  flex: 50%;
+}
+
+/* Clear floats after the columns */
+.row{
+  display: flex;
+  clear: left;
+}
+
+p{
+    font-size: 15px;
+}
+
+img{
+    float: left;
+}
+
+h1{
+    float: left;
+    color: red;
+    font-size: 50px;
+    position: relative;
+    top: 0px;
+    left: 5px;
+    transform: translateY(-30%);
+    
+}
+
+h2{
+    text-align: right;
+    color: red;
+    height: 5px;
+    position: relative;
+    top: 5px;
+    right: 5px;
+
+}
+hr{
+    height: 1px;
+   background-color: #000;
+   border: 0px; 
+}
+
+</style>
+</head>
+<body>
+
+<h1 style="display: inline;">웹프로그래밍과제</h1> 
+<h2>20211552</h2> 
+<h2>최성우</h2>
+
+
+<div class="row">
+  <div class="column" style="background-color:#ffffff;">
+    <h3>동서대학교</h3>
+    <img src="DSU.jpg" alt="동서대학교 뉴밀레니엄관 전경" width="200" height="133">
+    <p>20211552 최성우입니다. 해당 페이지는 과제용으로 만들어졌습니다. 이쪽 면은 1번면입니다. </p>
+</div>
+  <div class="column" style="background-color:#ffffff;">
+    <h3>최성우</h3>
+    <hr>
+    <p>20211552 컴퓨터공학과</p>
+    <hr>
+    <p>20211552 컴퓨터공학과</p>
+    <hr>
+    <p>20211552 컴퓨터공학과</p>
+    <hr>
+  </div>
+</div>
+
+</body>
+</html>
