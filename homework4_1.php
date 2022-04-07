@@ -53,13 +53,14 @@ echo $n;
 
 <?php
 for($x = 1; $x <= $n; $x++) {
-  echo "1에서 n까지의 수 출력: $x <br>";
+  echo "$x ";
 }
 for($i = 1; $i <= $n; $i++){
   $sum +=$i;
   $prod *=$i;
 }  
-
+echo"<br>";
+  
 echo ("합계:");
 for($i=1; $i <= $n; $i++){
   echo ($i);
