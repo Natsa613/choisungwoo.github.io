@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
-<body>
+<body onload="startTime()">
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
@@ -31,6 +31,188 @@
 
 <!-- Page content -->
 <div class="w3-content w3-padding" style="max-width:1564px">
+  <div id="txt"></div>
+
+<script>//시계
+  function startTime() {
+  const today = new Date();
+  let h = today.getHours();//시간
+  let m = today.getMinutes();//분
+  let s = today.getSeconds();//초
+  let y = today.getFullYear();//년
+  let M = today.getMonth() + 1;//월
+  let d = today.getDate();//일
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('txt').style.fontSize = "30px";
+  document.getElementById('txt').style.textAlign = "center";
+  document.getElementById('txt').style.borderStyle = "solid";
+  document.getElementById('txt').style.borderColor = "#000000";
+  document.getElementById('txt').innerHTML = y + "년" + M + "월" + d + "일 "+ h + ":" + m + ":" + s;
+  setTimeout(startTime, 1000);
+}
+
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+</script>
+
+
+<form action="" id="cakeform" onsubmit="return false;">
+  <fieldset>
+   <legend>카페 메뉴 계산기</legend>
+   <label >디저트류</label>
+   <br>
+   <input type="radio"  name="selectedcake" value="Round6"
+   onclick="calculateTotal()" />
+   허니 브레드 (￦4600)
+   <input type="radio"  name="selectedcake" value="Round8"
+   onclick="calculateTotal()" />
+   쇼트케이크 (￦7200)
+   <input type="radio"  name="selectedcake" value="Round10"
+   onclick="calculateTotal()" />
+   브라우니 (￦4500)
+   <input type="radio"  name="selectedcake" value="Round12"
+   onclick="calculateTotal()" />
+   마카롱 (￦2400)
+  <br>
+   <label >음료 메뉴</label>
+
+   <select id="filling" name='filling'
+   onchange="calculateTotal()">
+   <option value="None">음료 메뉴</option>
+   <option value="Lemon">레몬에이드(￦2800)</option>
+   <option value="Custard">자몽에이드(￦2800)</option>
+   <option value="Fudge">아메리카노(￦2000)</option>
+   <option value="Mocha">카페모카(￦3700)</option>
+   <option value="Raspberry">에스프레소(￦3000)</option>
+   <option value="Pineapple">파인애플에이드(￦2800)</option>
+   <option value="Dobash">카푸치노(￦2700)</option>
+   <option value="Mint">허브티(￦2500)</option>
+   <option value="Cherry">체리콕(￦3000)</option>
+   <option value="Apricot">카라멜마끼아또(￦3500)</option>
+   <option value="Buttercream">딸기 스무디(￦3900)</option>
+   <option value="Chocolate Mousse">초코 프라페(￦3900)</option>
+  </select>
+   <br/>
+   <div id="totalPrice"></div>
+
+   </fieldset>
+</form>
+
+
+<script>
+var theForm = document.forms["cakeform"];//양식 객체 참조
+
+var cake_prices = new Array();//라디오 목록 가격 매핑
+cake_prices["Round6"]=4600;
+cake_prices["Round8"]=7200;
+cake_prices["Round10"]=4500;
+cake_prices["Round12"]=2400;
+
+function getCakeSizePrice()// 선택된 라디오 목록 확인
+{
+    var cakeSizePrice=0;
+    //Get a reference to the form id="cakeform"
+    var theForm = document.forms["cakeform"];
+    //Get a reference to the cake the user Chooses name=selectedCake":
+    var selectedCake = theForm.elements["selectedcake"];
+    //Here since there are 4 radio buttons selectedCake.length = 4
+    //We loop through each radio buttons
+    for(var i = 0; i < selectedCake.length; i++)
+    {
+        //if the radio button is checked
+        if(selectedCake[i].checked)
+        {
+            //we set cakeSizePrice to the value of the selected radio button
+            //i.e. if the user choose the 8" cake we set it to 25
+            //by using the cake_prices array
+            //We get the selected Items value
+            //For example cake_prices["Round8".value]"
+            cakeSizePrice = cake_prices[selectedCake[i].value];
+            //If we get a match then we break out of this loop
+            //No reason to continue if we get a match
+            break;
+        }
+    }
+    //We return the cakeSizePrice
+    return cakeSizePrice;
+}
+
+var filling_prices= new Array();//선택 목록 가격 매핑
+ filling_prices["None"]=0;
+ filling_prices["Lemon"]=2800;
+ filling_prices["Custard"]=2800;
+ filling_prices["Fudge"]=2000;
+ filling_prices["Mocha"]=3700;
+ filling_prices["Raspberry"]=3000;
+ filling_prices["Pineapple"]=2800;
+ filling_prices["Dobash"]=2700;
+ filling_prices["Mint"]=2500;
+ filling_prices["Cherry"]=3000;
+ filling_prices["Apricot"]=3500;
+ filling_prices["Buttercream"]=3900;
+ filling_prices["Chocolate Mousse"]=3900;
+ 
+
+function getFillingPrice()//선택 목록 가격 찾기
+{
+    var cakeFillingPrice=0;
+    //Get a reference to the form id="cakeform"
+    var theForm = document.forms["cakeform"];
+    //Get a reference to the select id="filling"
+     var selectedFilling = theForm.elements["filling"];
+
+    //set cakeFilling Price equal to value user chose
+    //For example filling_prices["Lemon".value] would be equal to 5
+    cakeFillingPrice = filling_prices[selectedFilling.value];
+
+    //finally we return cakeFillingPrice
+    return cakeFillingPrice;
+}
+
+function getQuantity()
+{
+    //Assume form with id="theform"
+    var theForm = document.forms["cakeform"];
+    //Get a reference to the TextBox
+    var quantity = theForm.elements["quantity"];
+    var howmany =0;
+    //If the textbox is not blank
+    if(quantity.value!="")
+    {
+        howmany = parseInt(quantity.value);
+    }
+return howmany;
+}
+
+
+function calculateTotal()//총합 계산
+{
+    //Here we get the total price by calling our function
+    //Each function returns a number so by calling them we add the values they return together
+    var cakePrice = getCakeSizePrice() + getFillingPrice();
+    
+    //display the result
+    var divobj = document.getElementById('totalPrice');
+    divobj.style.display='block';
+    divobj.innerHTML = "Total Price For the Cake ￦"+cakePrice;
+    divobj.style.backgroundColor='#fff380';
+    divobj.style.borderStyle='solid';
+    divobj.style.borderColor='#cccccc'
+
+}
+
+function hideTotal()//총합 가리개
+{
+    var divobj = document.getElementById('totalPrice');
+    divobj.style.display='none';
+}
+</script>
+<input type='submit' id='submit' value='Submit' onclick="calculateTotal()" />
+
+
 
   <!-- Project Section -->
   <div class="w3-container w3-padding-32" id="projects">
